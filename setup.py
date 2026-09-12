@@ -48,9 +48,10 @@ def main():
     print("\n" + "=" * 50)
     print("🎉 Setup complete!")
     print("\nNext steps:")
-    print("1. Edit the .env file with your AWS credentials")
+    print("1. Optional: edit .env (AWS region, agent ID, alias ID; keys only if you")
+    print("   don't use an AWS profile or IAM role)")
     print("2. Run: streamlit run app.py")
-    print("3. Configure your AWS Bedrock Agent in the sidebar")
+    print("3. Check or enter your AWS Bedrock Agent settings in the sidebar")
     print("\n📚 Need help? Check the README.md file!")
 
 if __name__ == "__main__":
