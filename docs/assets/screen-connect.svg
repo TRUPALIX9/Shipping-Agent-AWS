@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="sc-t sc-d">
+  <title id="sc-t">Shipping Agent Assistant - connecting to an AWS Bedrock Agent</title>
+  <desc id="sc-d">First visit to the Streamlit app at localhost:8501. The sidebar AWS Agent Configuration form is filled in (masked keys, region us-east-1, Bedrock Agent ID and alias TSTALIASID) and shows the spinner Connecting to AWS Bedrock Agent. The main area still shows the red Not Connected status, an empty chat, the Quick Actions buttons and the session ID footer. All values are fictional demo data.</desc>
+  <defs>
+    <style>
+      .st{font-family:'Source Sans Pro','Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+      .ui{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    </style>
+    <radialGradient id="sc-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1120 720) scale(760 520)">
+      <stop offset="0" stop-color="#764BA2" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#764BA2" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sc-shadow" x="-8%" y="-8%" width="116%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="18"/>
+      <feOffset dy="14" result="b"/>
+      <feFlood flood-color="#2A2466" flood-opacity="0.16"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="sc-win"><rect x="40" y="40" width="1200" height="720" rx="12"/></clipPath>
+    <linearGradient id="sc-hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#667EEA"/>
+      <stop offset="1" stop-color="#764BA2"/>
+    </linearGradient>
+    <linearGradient id="sc-deco" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4B4B"/>
+      <stop offset="1" stop-color="#FFFD80"/>
+    </linearGradient>
+    <pattern id="sc-dots" x="41" y="0" width="10" height="84" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="24" r="3.4" fill="#31333F"/>
+    </pattern>
+  </defs>
+
+  <!-- Canvas: soft tint of the brand indigo -->
+  <rect width="1280" height="800" fill="#EEF0FB"/>
+  <rect width="1280" height="800" fill="url(#sc-glow)"/>
+
+  <!-- Window shadow -->
+  <rect x="40" y="40" width="1200" height="720" rx="12" fill="#FFFFFF" filter="url(#sc-shadow)"/>
+
+  <g clip-path="url(#sc-win)">
+    <rect x="40" y="40" width="1200" height="720" fill="#FFFFFF"/>
+
+    <!-- Browser chrome (light, neutral) -->
+    <rect x="40" y="40" width="1200" height="44" fill="#F2F2F5"/>
+    <path d="M40 83.5H1240" stroke="#DCDDE3"/>
+    <circle cx="64" cy="62" r="6" fill="#D5D6DC"/>
+    <circle cx="84" cy="62" r="6" fill="#D5D6DC"/>
+    <circle cx="104" cy="62" r="6" fill="#D5D6DC"/>
+    <g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M146 62h-12M139 56.5l-5.5 5.5 5.5 5.5" stroke="#B4B6BE"/>
+      <path d="M166 62h12M173 56.5l5.5 5.5-5.5 5.5" stroke="#B4B6BE"/>
+      <path d="M207 57l10 10M217 57l-10 10" stroke="#6B6E78"/>
+    </g>
+    <rect x="380" y="50" width="520" height="24" rx="12" fill="#FFFFFF" stroke="#DCDDE3"/>
+    <circle cx="398" cy="62" r="5.5" fill="none" stroke="#80838D" stroke-width="1.2"/>
+    <path d="M398 60.6v4M398 58.6v.2" stroke="#80838D" stroke-width="1.3" stroke-linecap="round"/>
+    <text x="412" y="66.5" class="ui" font-size="13" fill="#3C3F47">localhost<tspan fill="#80838D">:8501</tspan></text>
+
+    <!-- App viewport: drawn in CSS px at 70% zoom (1714 x 966) -->
+    <g transform="translate(40 84) scale(0.7)" class="st">
+      <rect x="0" y="0" width="1715" height="3" fill="url(#sc-deco)"/>
+
+      <!-- ============ Sidebar ============ -->
+      <rect x="0" y="3" width="336" height="963" fill="#F0F2F6"/>
+      <path d="M293 23l14 14M307 23l-14 14" stroke="#31333F" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- st.header("🔧 AWS Agent Configuration") -->
+      <g transform="translate(16 114) scale(0.8333)">
+        <path d="M14.2 9.8L5.2 18.8" stroke="#7D8A96" stroke-width="4.4" stroke-linecap="round"/>
+        <circle cx="16.2" cy="7.8" r="5.4" fill="#7D8A96"/>
+        <path d="M18.2 2.6l3.2 3.2-3.4 3.4-3.2-3.2z" fill="#F0F2F6"/>
+        <circle cx="5.4" cy="18.6" r="1.1" fill="#F0F2F6"/>
+      </g>
+      <text x="42" y="131" font-size="20" font-weight="600" fill="#31333F">AWS Agent Configuration</text>
+
+      <!-- st.form("aws_config"), mid-submit -->
+      <g transform="translate(0 -44)">
+        <rect x="16.5" y="212.5" width="303" height="529" rx="8" fill="none" stroke="#31333F" stroke-opacity="0.2"/>
+        <g font-size="14" fill="#31333F">
+          <text x="32" y="244">AWS Access Key ID</text>
+          <text x="32" y="328">AWS Secret Access Key</text>
+          <text x="32" y="412">AWS Region</text>
+          <text x="32" y="496">Bedrock Agent ID</text>
+          <text x="32" y="580">Agent Alias ID</text>
+        </g>
+        <rect x="32" y="256" width="272" height="40" rx="8" fill="#FFFFFF"/>
+        <rect x="41" y="268" width="200" height="16" fill="url(#sc-dots)"/>
+        <g fill="none" stroke="#31333F" stroke-opacity="0.6" stroke-width="1.6">
+          <path d="M274 276q10-8.5 20 0q-10 8.5-20 0z"/>
+          <circle cx="284" cy="276" r="2.8"/>
+        </g>
+        <rect x="32" y="340" width="272" height="40" rx="8" fill="#FFFFFF"/>
+        <rect x="41" y="352" width="220" height="16" fill="url(#sc-dots)"/>
+        <g fill="none" stroke="#31333F" stroke-opacity="0.6" stroke-width="1.6">
+          <path d="M274 360q10-8.5 20 0q-10 8.5-20 0z"/>
+          <circle cx="284" cy="360" r="2.8"/>
+        </g>
+        <rect x="32" y="424" width="272" height="40" rx="8" fill="#FFFFFF"/>
+        <text x="46" y="449.6" font-size="16" fill="#31333F">us-east-1</text>
+        <path d="M278 441l6 6 6-6" fill="none" stroke="#31333F" stroke-opacity="0.7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="32" y="508" width="272" height="40" rx="8" fill="#FFFFFF"/>
+        <text x="46" y="533.6" font-size="16" fill="#31333F">KX7PQ2M9RD</text>
+        <rect x="32" y="592" width="272" height="40" rx="8" fill="#FFFFFF"/>
+        <text x="46" y="617.6" font-size="16" fill="#31333F">TSTALIASID</text>
+        <!-- Connect to Agent (pressed) -->
+        <rect x="32.5" y="648.5" width="151" height="38" rx="8" fill="#FFFFFF" stroke="#FF4B4B"/>
+        <text x="108" y="673" font-size="16" fill="#FF4B4B" text-anchor="middle">Connect to Agent</text>
+        <!-- st.spinner("Connecting to AWS Bedrock Agent...") -->
+        <circle cx="43" cy="714" r="9" fill="none" stroke="#31333F" stroke-opacity="0.2" stroke-width="3"/>
+        <path d="M43 705a9 9 0 0 1 9 9" fill="none" stroke="#31333F" stroke-opacity="0.75" stroke-width="3" stroke-linecap="round"/>
+        <text x="60" y="719" font-size="15" fill="#31333F">Connecting to AWS Bedrock Agent...</text>
+      </g>
+
+      <!-- ============ Main area ============ -->
+      <!-- stHeader: status widget (script running), Deploy, main menu -->
+      <g transform="translate(1398 15)">
+        <circle cx="8" cy="11" r="7" fill="none" stroke="#31333F" stroke-opacity="0.2" stroke-width="2.2"/>
+        <path d="M8 4a7 7 0 0 1 7 7" fill="none" stroke="#31333F" stroke-opacity="0.7" stroke-width="2.2" stroke-linecap="round"/>
+      </g>
+      <text x="1424" y="31" font-size="15" fill="#31333F" fill-opacity="0.75">Running...</text>
+      <text x="1506" y="31" font-size="15" fill="#31333F">Stop</text>
+      <text x="1606" y="31" font-size="15" fill="#31333F" text-anchor="end">Deploy</text>
+      <g fill="#31333F"><circle cx="1668" cy="19" r="2.3"/><circle cx="1668" cy="26" r="2.3"/><circle cx="1668" cy="33" r="2.3"/></g>
+
+      <!-- .main-header -->
+      <rect x="416" y="96" width="1218" height="188" rx="10" fill="url(#sc-hdr)"/>
+      <g transform="translate(714 148)">
+        <rect x="3" y="12" width="38" height="30" rx="2.5" fill="#C98F4F"/>
+        <rect x="1" y="5" width="42" height="11" rx="2.5" fill="#DDA863"/>
+        <rect x="18" y="5" width="8" height="37" fill="#F0D3A0"/>
+        <rect x="3" y="16" width="38" height="2.5" fill="#A8713A" opacity="0.55"/>
+        <rect x="27" y="30" width="10" height="7" rx="1" fill="#F6E6C8"/>
+      </g>
+      <text x="770" y="188" font-size="44" font-weight="700" fill="#FFFFFF" letter-spacing="-0.4">Shipping Agent Assistant</text>
+      <text x="1025" y="235" font-size="16" fill="#FFFFFF" text-anchor="middle">Connect your AWS Bedrock Agent for intelligent shipping assistance</text>
+
+      <!-- Connection status: not connected yet -->
+      <rect x="416.5" y="332.5" width="1217" height="57" rx="5" fill="#F8D7DA" stroke="#F5C6CB"/>
+      <path d="M435 353.5l12 12M447 353.5l-12 12" stroke="#E0243A" stroke-width="3.4" stroke-linecap="round"/>
+      <text x="456" y="367" font-size="16" fill="#721C24"><tspan font-weight="700">Not Connected</tspan> - Please configure your AWS credentials in the sidebar</text>
+
+      <!-- st.header("💬 Chat with Your Agent") -->
+      <g transform="translate(416 444)">
+        <path d="M6 3h24a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5H15l-8 6 1.5-6H6a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5z" fill="#F4F6F9" stroke="#8E9BAA" stroke-width="1.8" stroke-linejoin="round"/>
+      </g>
+      <text x="462" y="474" font-size="36" font-weight="600" fill="#31333F" letter-spacing="-0.2">Chat with Your Agent</text>
+
+      <!-- st.form("chat_form") with no history yet -->
+      <rect x="416.5" y="521.5" width="1217" height="73" rx="8" fill="none" stroke="#31333F" stroke-opacity="0.2"/>
+      <rect x="432" y="538" width="936" height="40" rx="8" fill="#F0F2F6"/>
+      <text x="446" y="563.6" font-size="16" fill="#31333F" fill-opacity="0.45">e.g., What are the shipping rates to New York?</text>
+      <rect x="1384.5" y="538.5" width="233" height="39" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+      <text x="1471" y="563.6" font-size="16" fill="#31333F">Send</text>
+      <g transform="translate(1514 548)">
+        <path d="M1 9h4l1.5 2.5h5L13 9h4v6.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 1 15.5z" fill="#8795A3"/>
+        <path d="M9 9.5V1.5M5.8 4.6L9 1.4l3.2 3.2" fill="none" stroke="#2F80ED" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- st.header("🚀 Quick Actions") -->
+      <g transform="translate(416 646)">
+        <path d="M31 3c-9 1-15.5 6.5-19.5 14.5l6 6C25.5 19.5 31 13 32 4z" fill="#D9E1EA" stroke="#8E9BAA" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="23.5" cy="11.5" r="3" fill="#4AA3DF"/>
+        <path d="M11.5 17.5L5 18l-3 5 7-1zM17.5 23.5L17 30l-5 3 1-7z" fill="#E0474C"/>
+        <path d="M9.5 25.5c-3 1-4.5 4-5 7.5 3.5-.5 6.5-2 7.5-5z" fill="#F5A623"/>
+      </g>
+      <text x="462" y="679" font-size="36" font-weight="600" fill="#31333F" letter-spacing="-0.2">Quick Actions</text>
+
+      <!-- Three st.button columns -->
+      <g font-size="16" fill="#31333F">
+        <rect x="416.5" y="726.5" width="394" height="38" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+        <g transform="translate(537 735)">
+          <rect x="1" y="3" width="16" height="18" rx="2" fill="#B07A45"/>
+          <rect x="3.5" y="6" width="11" height="13" fill="#FFFFFF"/>
+          <rect x="5.5" y="1" width="7" height="4.5" rx="1.2" fill="#8A93A0"/>
+          <path d="M5.5 10h7M5.5 13h7M5.5 16h4.5" stroke="#9AA4B1" stroke-width="1.2"/>
+        </g>
+        <text x="561" y="751">Get Shipping Rates</text>
+
+        <rect x="827.5" y="726.5" width="394" height="38" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+        <g transform="translate(971 736) scale(0.44)">
+          <rect x="3" y="12" width="38" height="30" rx="2.5" fill="#C98F4F"/>
+          <rect x="1" y="5" width="42" height="11" rx="2.5" fill="#DDA863"/>
+          <rect x="18" y="5" width="8" height="37" fill="#F0D3A0"/>
+        </g>
+        <text x="995" y="751">Track Package</text>
+
+        <rect x="1239.5" y="726.5" width="394" height="38" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+        <g transform="translate(1391 735)">
+          <rect x="0" y="0" width="20" height="20" rx="4" fill="#3E8EDE"/>
+          <path d="M15 8.5a5.4 5.4 0 0 0-9.6-1.6M5 11.5a5.4 5.4 0 0 0 9.6 1.6" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M15.6 4.4v4.4h-4.4M4.4 15.6v-4.4h4.4" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="1417" y="751">Clear Chat</text>
+      </g>
+
+      <!-- st.markdown horizontal rule + footer -->
+      <path d="M416 812.5H1634" stroke="#31333F" stroke-opacity="0.2"/>
+      <text x="1025" y="889" font-size="12.8" fill="#666666" text-anchor="middle">Powered by AWS Bedrock Agent &amp; Streamlit | Session ID: session-1789395731</text>
+    </g>
+  </g>
+  <rect x="40.5" y="40.5" width="1199" height="719" rx="11.5" fill="none" stroke="#D6D8E2"/>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="128" viewBox="0 0 480 128" role="img" aria-labelledby="lg-t lg-d">
+  <title id="lg-t">Shipping Agent Assistant</title>
+  <desc id="lg-d">Logo: a chat bubble holding a parcel on an indigo-to-purple tile, with the wordmark Shipping Agent Assistant.</desc>
+  <defs>
+    <style>.st{font-family:'Source Sans Pro','Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}</style>
+    <linearGradient id="lg-bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#667EEA"/>
+      <stop offset="1" stop-color="#764BA2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tile: icon.svg at 96px -->
+  <g transform="translate(16 16) scale(0.1875)">
+    <rect width="512" height="512" rx="112" fill="url(#lg-bg)"/>
+    <path d="M168 112H344A72 72 0 0 1 416 184V288A72 72 0 0 1 344 360H216L132 418L150 357A72 72 0 0 1 96 288V184A72 72 0 0 1 168 112Z" fill="#FFFFFF"/>
+    <path d="M256 152L340 194L256 236L172 194Z" fill="#8C9BF3"/>
+    <path d="M172 194L256 236V332L172 290Z" fill="#667EEA"/>
+    <path d="M256 236L340 194V290L256 332Z" fill="#764BA2"/>
+    <path d="M201.5 179.3L226.5 166.7L310.5 208.7L285.5 221.3Z" fill="#D6DCFC"/>
+    <path d="M285.5 221.3L310.5 208.7V304.7L285.5 317.3Z" fill="#A487CC"/>
+  </g>
+
+  <!-- Wordmark: #6F6AE0 reads on both light and dark (4.36:1 each, large text) -->
+  <text x="134" y="68" class="st" font-size="42" font-weight="700" letter-spacing="-0.8" fill="#6F6AE0">Shipping Agent</text>
+  <text x="136" y="102" class="st" font-size="20" font-weight="700" letter-spacing="9" fill="#6F6AE0">ASSISTANT</text>
+</svg>
