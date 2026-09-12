@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="sq-t sq-d">
+  <title id="sq-t">Shipping Agent Assistant - Quick Actions</title>
+  <desc id="sq-d">The Streamlit app at localhost:8501 with the sidebar collapsed, scrolled to the bottom of the page: the end of a rates and tracking conversation, the chat input, and the Quick Actions buttons Get Shipping Rates, Track Package and Clear Chat, with the spinner Getting shipping rates under the first button and the footer Powered by AWS Bedrock Agent and Streamlit with the session ID. All values are fictional demo data.</desc>
+  <defs>
+    <style>
+      .st{font-family:'Source Sans Pro','Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+      .ui{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    </style>
+    <radialGradient id="sq-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1120 720) scale(760 520)">
+      <stop offset="0" stop-color="#764BA2" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#764BA2" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sq-shadow" x="-8%" y="-8%" width="116%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="18"/>
+      <feOffset dy="14" result="b"/>
+      <feFlood flood-color="#2A2466" flood-opacity="0.16"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="sq-win"><rect x="40" y="40" width="1200" height="720" rx="12"/></clipPath>
+    <linearGradient id="sq-deco" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF4B4B"/>
+      <stop offset="1" stop-color="#FFFD80"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas: soft tint of the brand indigo -->
+  <rect width="1280" height="800" fill="#EEF0FB"/>
+  <rect width="1280" height="800" fill="url(#sq-glow)"/>
+
+  <!-- Window shadow -->
+  <rect x="40" y="40" width="1200" height="720" rx="12" fill="#FFFFFF" filter="url(#sq-shadow)"/>
+
+  <g clip-path="url(#sq-win)">
+    <rect x="40" y="40" width="1200" height="720" fill="#FFFFFF"/>
+
+    <!-- App viewport: drawn in CSS px at 70% zoom (1714 x 966), sidebar collapsed, scrolled to the page end -->
+    <g transform="translate(40 84) scale(0.7)" class="st">
+
+      <!-- Message 2: agent (rates), partly scrolled under the header -->
+      <rect x="80" y="69" width="1554" height="84" rx="10" fill="#F3E5F5"/>
+      <path d="M90 69A10 10 0 0 0 80 79V143A10 10 0 0 0 90 153A6 10 0 0 1 84 143V79A6 10 0 0 1 90 69Z" fill="#9C27B0"/>
+      <text x="100" y="103" font-size="16" fill="#31333F"><tspan font-weight="700">Agent:</tspan> Here are the rates for a 4 lb box (12 × 10 × 6 in) from Portland, OR 97209 to Brooklyn, NY 11201: Standard Ground $14.85, arrives Mon, Sep 21; 2-Day Express $38.20,</text>
+      <text x="100" y="129" font-size="16" fill="#31333F">arrives Wed, Sep 16; Overnight $71.40, arrives Tue, Sep 15 by 10:30 AM. Want rates for a different box size or service?</text>
+      <text x="1618" y="129" font-size="13.3" fill="#666666" text-anchor="end">14:02:16</text>
+
+      <!-- Message 3: user -->
+      <rect x="80" y="185" width="1554" height="58" rx="10" fill="#E3F2FD"/>
+      <path d="M90 185A10 10 0 0 0 80 195V233A10 10 0 0 0 90 243A6 10 0 0 1 84 233V195A6 10 0 0 1 90 185Z" fill="#2196F3"/>
+      <text x="100" y="219" font-size="16" fill="#31333F"><tspan font-weight="700">You:</tspan> Thanks! Can you also track package HPS-4821-7730 and tell me when it will arrive?</text>
+      <text x="1618" y="219" font-size="13.3" fill="#666666" text-anchor="end">14:03:40</text>
+
+      <!-- Message 4: agent (tracking) -->
+      <rect x="80" y="275" width="1554" height="84" rx="10" fill="#F3E5F5"/>
+      <path d="M90 275A10 10 0 0 0 80 285V349A10 10 0 0 0 90 359A6 10 0 0 1 84 349V285A6 10 0 0 1 90 275Z" fill="#9C27B0"/>
+      <text x="100" y="309" font-size="16" fill="#31333F"><tspan font-weight="700">Agent:</tspan> Package HPS-4821-7730 is In Transit. Last scan: departed the Salt Lake City, UT sort facility on Mon, Sep 14 at 6:12 AM. It is on schedule for delivery to Brooklyn, NY 11201</text>
+      <text x="100" y="335" font-size="16" fill="#31333F">on Wed, Sep 16 by 8:00 PM. Ask me again any time for the latest scan.</text>
+      <text x="1618" y="335" font-size="13.3" fill="#666666" text-anchor="end">14:03:46</text>
+
+      <!-- st.form("chat_form"): text input (4) + Send (1) -->
+      <rect x="80.5" y="383.5" width="1553" height="73" rx="8" fill="none" stroke="#31333F" stroke-opacity="0.2"/>
+      <rect x="96" y="400" width="1205" height="40" rx="8" fill="#F0F2F6"/>
+      <text x="110" y="425.6" font-size="16" fill="#31333F" fill-opacity="0.45">e.g., What are the shipping rates to New York?</text>
+      <rect x="1317.5" y="400.5" width="300" height="39" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+      <text x="1438" y="425.6" font-size="16" fill="#31333F">Send</text>
+      <g transform="translate(1481 410)">
+        <path d="M1 9h4l1.5 2.5h5L13 9h4v6.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 1 15.5z" fill="#8795A3"/>
+        <path d="M9 9.5V1.5M5.8 4.6L9 1.4l3.2 3.2" fill="none" stroke="#2F80ED" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+
+      <!-- st.header("🚀 Quick Actions") -->
+      <g transform="translate(80 508)">
+        <path d="M31 3c-9 1-15.5 6.5-19.5 14.5l6 6C25.5 19.5 31 13 32 4z" fill="#D9E1EA" stroke="#8E9BAA" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="23.5" cy="11.5" r="3" fill="#4AA3DF"/>
+        <path d="M11.5 17.5L5 18l-3 5 7-1zM17.5 23.5L17 30l-5 3 1-7z" fill="#E0474C"/>
+        <path d="M9.5 25.5c-3 1-4.5 4-5 7.5 3.5-.5 6.5-2 7.5-5z" fill="#F5A623"/>
+      </g>
+      <text x="126" y="541" font-size="36" font-weight="600" fill="#31333F" letter-spacing="-0.2">Quick Actions</text>
+
+      <!-- Three st.button columns; Get Shipping Rates was just clicked -->
+      <g font-size="16" fill="#31333F">
+        <rect x="80.5" y="588.5" width="506" height="38" rx="8" fill="#FFFFFF" stroke="#FF4B4B"/>
+        <g transform="translate(257 597)">
+          <rect x="1" y="3" width="16" height="18" rx="2" fill="#B07A45"/>
+          <rect x="3.5" y="6" width="11" height="13" fill="#FFFFFF"/>
+          <rect x="5.5" y="1" width="7" height="4.5" rx="1.2" fill="#8A93A0"/>
+          <path d="M5.5 10h7M5.5 13h7M5.5 16h4.5" stroke="#9AA4B1" stroke-width="1.2"/>
+        </g>
+        <text x="281" y="613" fill="#FF4B4B">Get Shipping Rates</text>
+
+        <rect x="603.5" y="588.5" width="506" height="38" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+        <g transform="translate(803 598) scale(0.44)">
+          <rect x="3" y="12" width="38" height="30" rx="2.5" fill="#C98F4F"/>
+          <rect x="1" y="5" width="42" height="11" rx="2.5" fill="#DDA863"/>
+          <rect x="18" y="5" width="8" height="37" fill="#F0D3A0"/>
+        </g>
+        <text x="827" y="613">Track Package</text>
+
+        <rect x="1127.5" y="588.5" width="506" height="38" rx="8" fill="#FFFFFF" stroke="#31333F" stroke-opacity="0.2"/>
+        <g transform="translate(1335 597)">
+          <rect x="0" y="0" width="20" height="20" rx="4" fill="#3E8EDE"/>
+          <path d="M15 8.5a5.4 5.4 0 0 0-9.6-1.6M5 11.5a5.4 5.4 0 0 0 9.6 1.6" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M15.6 4.4v4.4h-4.4M4.4 15.6v-4.4h4.4" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="1361" y="613">Clear Chat</text>
+      </g>
+
+      <!-- st.spinner("Getting shipping rates...") inside column 1 -->
+      <circle cx="91" cy="654" r="9" fill="none" stroke="#31333F" stroke-opacity="0.2" stroke-width="3"/>
+      <path d="M91 645a9 9 0 0 1 9 9" fill="none" stroke="#31333F" stroke-opacity="0.75" stroke-width="3" stroke-linecap="round"/>
+      <text x="108" y="659.5" font-size="16" fill="#31333F">Getting shipping rates...</text>
+
+      <!-- st.markdown horizontal rule + footer -->
+      <path d="M80 706.5H1634" stroke="#31333F" stroke-opacity="0.2"/>
+      <text x="857" y="786" font-size="12.8" fill="#666666" text-anchor="middle">Powered by AWS Bedrock Agent &amp; Streamlit | Session ID: session-1789395731</text>
+
+      <!-- stHeader (opaque, content scrolls beneath it) -->
+      <rect x="0" y="0" width="1715" height="60" fill="#FFFFFF"/>
+      <rect x="0" y="0" width="1715" height="3" fill="url(#sq-deco)"/>
+      <!-- Collapsed sidebar: expand control -->
+      <path d="M22 22l7 7-7 7M31 22l7 7-7 7" fill="none" stroke="#31333F" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Status widget while the quick action runs -->
+      <g transform="translate(1398 15)">
+        <circle cx="8" cy="11" r="7" fill="none" stroke="#31333F" stroke-opacity="0.2" stroke-width="2.2"/>
+        <path d="M8 4a7 7 0 0 1 7 7" fill="none" stroke="#31333F" stroke-opacity="0.7" stroke-width="2.2" stroke-linecap="round"/>
+      </g>
+      <text x="1424" y="31" font-size="15" fill="#31333F" fill-opacity="0.75">Running...</text>
+      <text x="1506" y="31" font-size="15" fill="#31333F">Stop</text>
+      <text x="1606" y="31" font-size="15" fill="#31333F" text-anchor="end">Deploy</text>
+      <g fill="#31333F"><circle cx="1668" cy="19" r="2.3"/><circle cx="1668" cy="26" r="2.3"/><circle cx="1668" cy="33" r="2.3"/></g>
+    </g>
+
+    <!-- Browser chrome (light, neutral), drawn last so it sits above the viewport -->
+    <rect x="40" y="40" width="1200" height="44" fill="#F2F2F5"/>
+    <path d="M40 83.5H1240" stroke="#DCDDE3"/>
+    <circle cx="64" cy="62" r="6" fill="#D5D6DC"/>
+    <circle cx="84" cy="62" r="6" fill="#D5D6DC"/>
+    <circle cx="104" cy="62" r="6" fill="#D5D6DC"/>
+    <g fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M146 62h-12M139 56.5l-5.5 5.5 5.5 5.5" stroke="#6B6E78"/>
+      <path d="M166 62h12M173 56.5l5.5 5.5-5.5 5.5" stroke="#B4B6BE"/>
+      <path d="M207 57l10 10M217 57l-10 10" stroke="#6B6E78"/>
+    </g>
+    <rect x="380" y="50" width="520" height="24" rx="12" fill="#FFFFFF" stroke="#DCDDE3"/>
+    <circle cx="398" cy="62" r="5.5" fill="none" stroke="#80838D" stroke-width="1.2"/>
+    <path d="M398 60.6v4M398 58.6v.2" stroke="#80838D" stroke-width="1.3" stroke-linecap="round"/>
+    <text x="412" y="66.5" class="ui" font-size="13" fill="#3C3F47">localhost<tspan fill="#80838D">:8501</tspan></text>
+  </g>
+  <rect x="40.5" y="40.5" width="1199" height="719" rx="11.5" fill="none" stroke="#D6D8E2"/>
+</svg>

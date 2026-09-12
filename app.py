@@ -1,15 +1,27 @@
+import html
+import os
 import streamlit as st
 import boto3
 import json
 from datetime import datetime
 import time
+from dotenv import load_dotenv
+
+# Load optional settings from a local .env file (see .env.example).
+# Values already set in the environment win over the file.
+load_dotenv()
+
+AWS_REGIONS = ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"]
+ENV_REGION = os.getenv("AWS_REGION") or os.getenv("AWS_DEFAULT_REGION") or ""
+if ENV_REGION and ENV_REGION not in AWS_REGIONS:
+    AWS_REGIONS.insert(0, ENV_REGION)
 
 # Configure page
 st.set_page_config(
     page_title="Shipping Agent Assistant",
     page_icon="📦",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # Custom CSS for minimalistic design
@@ -23,7 +35,11 @@ st.markdown("""
         border-radius: 10px;
         margin-bottom: 2rem;
     }
-    
+
+    .main-header h1 {
+        color: white;
+    }
+
     .chat-container {
         background: #f8f9fa;
         border-radius: 10px;
@@ -33,6 +49,7 @@ st.markdown("""
     
     .user-message {
         background: #e3f2fd;
+        color: #31333f;
         padding: 1rem;
         border-radius: 10px;
         margin: 0.5rem 0;
@@ -41,6 +58,7 @@ st.markdown("""
     
     .agent-message {
         background: #f3e5f5;
+        color: #31333f;
         padding: 1rem;
         border-radius: 10px;
         margin: 0.5rem 0;
@@ -77,28 +95,47 @@ class AWSAgentConnector:
     def initialize_connection(self, aws_access_key, aws_secret_key, region, agent_id, agent_alias_id):
         """Initialize connection to AWS Bedrock Agent"""
         try:
-            self.session = boto3.Session(
-                aws_access_key_id=aws_access_key,
-                aws_secret_access_key=aws_secret_key,
-                region_name=region
-            )
+            if aws_access_key and aws_secret_key:
+                self.session = boto3.Session(
+                    aws_access_key_id=aws_access_key,
+                    aws_secret_access_key=aws_secret_key,
+                    region_name=region
+                )
+            else:
+                # No keys typed in: use boto3's default credential chain
+                # (AWS_* env vars / .env, AWS profile, SSO, or an IAM role).
+                self.session = boto3.Session(region_name=region)
             
             self.bedrock_agent = self.session.client('bedrock-agent-runtime')
             self.agent_id = agent_id
             self.agent_alias_id = agent_alias_id
             
-            # Test connection
-            response = self.bedrock_agent.invoke_agent(
-                agentId=self.agent_id,
-                agentAliasId=self.agent_alias_id,
-                sessionId=f"test-session-{int(time.time())}",
-                inputText="Hello, are you working?"
-            )
-            
+            # Test connection. Read the whole stream: many failures (model
+            # access denied, throttling, agent errors) only raise while the
+            # completion stream is read, not when invoke_agent returns.
+            self._invoke("Hello, are you working?", f"test-session-{int(time.time())}")
+
             return True, "Successfully connected to AWS Bedrock Agent!"
-            
+
         except Exception as e:
+            self.bedrock_agent = None
             return False, f"Connection failed: {str(e)}"
+
+    def _invoke(self, message, session_id):
+        """Call invoke_agent and join the text chunks of the event stream"""
+        response = self.bedrock_agent.invoke_agent(
+            agentId=self.agent_id,
+            agentAliasId=self.agent_alias_id,
+            sessionId=session_id,
+            inputText=message
+        )
+
+        response_text = ""
+        for event in response.get('completion', []):
+            chunk = event.get('chunk', {})
+            if 'bytes' in chunk:
+                response_text += chunk['bytes'].decode('utf-8')
+        return response_text
     
     def send_message(self, message, session_id):
         """Send message to AWS Bedrock Agent"""
@@ -106,24 +143,10 @@ class AWSAgentConnector:
             return "Error: Agent not connected. Please configure connection first."
         
         try:
-            response = self.bedrock_agent.invoke_agent(
-                agentId=self.agent_id,
-                agentAliasId=self.agent_alias_id,
-                sessionId=session_id,
-                inputText=message
-            )
-            
-            # Extract response from the event stream
-            response_text = ""
-            if 'completion' in response:
-                for event in response['completion']:
-                    if 'chunk' in event:
-                        chunk = event['chunk']
-                        if 'bytes' in chunk:
-                            response_text += chunk['bytes'].decode('utf-8')
-            
-            return response_text if response_text else "Agent processed your request successfully."
-            
+            response_text = self._invoke(message, session_id)
+
+            return response_text if response_text else "The agent returned no text response."
+
         except Exception as e:
             return f"Error communicating with agent: {str(e)}"
 
@@ -150,18 +173,32 @@ with st.sidebar:
     st.header("🔧 AWS Agent Configuration")
     
     with st.form("aws_config"):
-        aws_access_key = st.text_input("AWS Access Key ID", type="password")
-        aws_secret_key = st.text_input("AWS Secret Access Key", type="password")
-        region = st.selectbox("AWS Region", [
-            "us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"
-        ])
-        agent_id = st.text_input("Bedrock Agent ID")
-        agent_alias_id = st.text_input("Agent Alias ID", value="TSTALIASID")
-        
+        # Key fields are never pre-filled, so secrets from the environment
+        # are not sent to the browser. Leave both blank to use the
+        # environment / AWS profile instead.
+        aws_access_key = st.text_input(
+            "AWS Access Key ID", type="password",
+            placeholder="Blank = use env / AWS profile"
+        )
+        aws_secret_key = st.text_input(
+            "AWS Secret Access Key", type="password",
+            placeholder="Blank = use env / AWS profile"
+        )
+        region = st.selectbox(
+            "AWS Region", AWS_REGIONS,
+            index=AWS_REGIONS.index(ENV_REGION) if ENV_REGION else 0
+        )
+        agent_id = st.text_input("Bedrock Agent ID", value=os.getenv("BEDROCK_AGENT_ID", ""))
+        agent_alias_id = st.text_input(
+            "Agent Alias ID", value=os.getenv("BEDROCK_AGENT_ALIAS_ID") or "TSTALIASID"
+        )
+
         submit_config = st.form_submit_button("Connect to Agent")
-        
+
         if submit_config:
-            if all([aws_access_key, aws_secret_key, region, agent_id]):
+            if bool(aws_access_key) != bool(aws_secret_key):
+                st.error("Enter both the Access Key ID and the Secret Access Key, or leave both blank")
+            elif all([region, agent_id, agent_alias_id]):
                 with st.spinner("Connecting to AWS Bedrock Agent..."):
                     success, message = st.session_state.agent_connector.initialize_connection(
                         aws_access_key, aws_secret_key, region, agent_id, agent_alias_id
@@ -197,17 +234,21 @@ st.header("💬 Chat with Your Agent")
 chat_container = st.container()
 with chat_container:
     for message in st.session_state.messages:
+        # Escape user/agent text so it shows as text instead of being
+        # injected as HTML, and keep line breaks without blank lines that
+        # would end the HTML block.
+        content = html.escape(message["content"]).replace("\n", "<br>")
         if message["role"] == "user":
             st.markdown(f"""
             <div class="user-message">
-                <strong>You:</strong> {message["content"]}
+                <strong>You:</strong> {content}
                 <small style="float: right; color: #666;">{message["timestamp"]}</small>
             </div>
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
             <div class="agent-message">
-                <strong>Agent:</strong> {message["content"]}
+                <strong>Agent:</strong> {content}
                 <small style="float: right; color: #666;">{message["timestamp"]}</small>
             </div>
             """, unsafe_allow_html=True)
@@ -281,6 +322,8 @@ with col1:
                     "timestamp": datetime.now().strftime("%H:%M:%S")
                 })
             st.rerun()
+        else:
+            st.warning("Connect to your agent in the sidebar first.")
 
 with col2:
     if st.button("📦 Track Package", use_container_width=True):
@@ -304,6 +347,8 @@ with col2:
                     "timestamp": datetime.now().strftime("%H:%M:%S")
                 })
             st.rerun()
+        else:
+            st.warning("Connect to your agent in the sidebar first.")
 
 with col3:
     if st.button("🔄 Clear Chat", use_container_width=True):

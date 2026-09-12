@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="ar-t ar-d">
+  <title id="ar-t">Shipping Agent Assistant architecture</title>
+  <desc id="ar-d">The browser talks to the Streamlit app (app.py) over HTTP and WebSocket on port 8501. app.py passes each chat message to AWSAgentConnector, which uses boto3's bedrock-agent-runtime client to call InvokeAgent over HTTPS with SigV4 signing. The user's own Amazon Bedrock Agent, which is not part of this repository, returns a completion event stream whose chunks are joined into the reply. Settings come from the sidebar form or from .env and the environment via python-dotenv and boto3's default credential chain.</desc>
+  <defs>
+    <style>
+      .st{font-family:'Source Sans Pro','Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace}
+    </style>
+    <linearGradient id="ar-tile" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#667EEA"/>
+      <stop offset="1" stop-color="#764BA2"/>
+    </linearGradient>
+    <linearGradient id="ar-bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#667EEA"/>
+      <stop offset="1" stop-color="#764BA2"/>
+    </linearGradient>
+    <marker id="ar-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#4B55C8"/>
+    </marker>
+    <marker id="ar-head2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#764BA2"/>
+    </marker>
+    <filter id="ar-shadow" x="-10%" y="-10%" width="120%" height="140%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+      <feOffset dy="4" result="b"/>
+      <feFlood flood-color="#2A2466" flood-opacity="0.10"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="720" fill="#EEF0FB"/>
+
+  <!-- Title -->
+  <g transform="translate(40 36) scale(0.09375)">
+    <rect width="512" height="512" rx="112" fill="url(#ar-tile)"/>
+    <path d="M168 112H344A72 72 0 0 1 416 184V288A72 72 0 0 1 344 360H216L132 418L150 357A72 72 0 0 1 96 288V184A72 72 0 0 1 168 112Z" fill="#FFFFFF"/>
+    <path d="M256 152L340 194L256 236L172 194Z" fill="#8C9BF3"/>
+    <path d="M172 194L256 236V332L172 290Z" fill="#667EEA"/>
+    <path d="M256 236L340 194V290L256 332Z" fill="#764BA2"/>
+  </g>
+  <text x="100" y="62" class="st" font-size="26" font-weight="700" fill="#31333F">Shipping Agent Assistant</text>
+  <text x="100" y="86" class="st" font-size="16" fill="#555867">How one chat message travels from the browser to your Bedrock Agent and back</text>
+
+  <!-- ===== Group: Browser ===== -->
+  <rect x="40.5" y="130.5" width="250" height="470" rx="14" fill="#FFFFFF" fill-opacity="0.55" stroke="#A9B1E6" stroke-dasharray="6 5"/>
+  <text x="60" y="160" class="mono" font-size="13" letter-spacing="1.5" fill="#4B55C8">BROWSER</text>
+
+  <g filter="url(#ar-shadow)">
+    <rect x="60" y="190" width="210" height="190" rx="10" fill="#FFFFFF" stroke="#D4D8F0"/>
+  </g>
+  <rect x="60" y="190" width="210" height="6" rx="3" fill="url(#ar-bar)"/>
+  <text x="78" y="226" class="st" font-size="19" font-weight="700" fill="#31333F">Streamlit page</text>
+  <text x="78" y="248" class="st" font-size="14" fill="#555867">localhost:8501</text>
+  <g class="st" font-size="14" fill="#31333F">
+    <text x="78" y="284">Sidebar: AWS Agent</text>
+    <text x="78" y="302">Configuration form</text>
+    <text x="78" y="330">Chat with Your Agent</text>
+    <text x="78" y="358">Quick Actions</text>
+  </g>
+
+  <!-- ===== Group: Streamlit server (this repo) ===== -->
+  <rect x="350.5" y="130.5" width="400" height="470" rx="14" fill="#FFFFFF" fill-opacity="0.55" stroke="#A9B1E6" stroke-dasharray="6 5"/>
+  <text x="370" y="160" class="mono" font-size="13" letter-spacing="1.5" fill="#4B55C8">STREAMLIT SERVER · THIS REPO</text>
+
+  <!-- app.py -->
+  <g filter="url(#ar-shadow)">
+    <rect x="380" y="190" width="340" height="100" rx="10" fill="#FFFFFF" stroke="#D4D8F0"/>
+  </g>
+  <rect x="380" y="190" width="340" height="6" rx="3" fill="url(#ar-bar)"/>
+  <text x="398" y="226" class="mono" font-size="18" font-weight="700" fill="#31333F">app.py</text>
+  <text x="398" y="250" class="st" font-size="14" fill="#555867">Streamlit UI, session state, chat history</text>
+  <text x="398" y="272" class="st" font-size="14" fill="#555867">Python 3 · streamlit ≥ 1.28</text>
+
+  <!-- AWSAgentConnector -->
+  <g filter="url(#ar-shadow)">
+    <rect x="380" y="340" width="340" height="110" rx="10" fill="#FFFFFF" stroke="#D4D8F0"/>
+  </g>
+  <rect x="380" y="340" width="340" height="6" rx="3" fill="url(#ar-bar)"/>
+  <text x="398" y="376" class="mono" font-size="18" font-weight="700" fill="#31333F">AWSAgentConnector</text>
+  <text x="398" y="400" class="st" font-size="14" fill="#555867">boto3 client: bedrock-agent-runtime</text>
+  <text x="398" y="422" class="st" font-size="14" fill="#555867">Joins completion chunks into one reply</text>
+
+  <!-- Config -->
+  <rect x="380" y="500" width="340" height="76" rx="10" fill="#F7F8FE" stroke="#D4D8F0"/>
+  <text x="398" y="530" class="mono" font-size="15" font-weight="700" fill="#31333F">.env · environment</text>
+  <text x="398" y="554" class="st" font-size="14" fill="#555867">python-dotenv · boto3 default credential chain</text>
+
+  <!-- ===== Group: Your AWS account ===== -->
+  <rect x="890.5" y="130.5" width="350" height="470" rx="14" fill="#FFFFFF" fill-opacity="0.55" stroke="#C3AEDB" stroke-dasharray="6 5"/>
+  <text x="910" y="160" class="mono" font-size="13" letter-spacing="1.5" fill="#764BA2">YOUR AWS ACCOUNT</text>
+  <text x="910" y="180" class="st" font-size="13" fill="#6E5A8A">not part of this repo</text>
+
+  <g filter="url(#ar-shadow)">
+    <rect x="920" y="320" width="290" height="160" rx="10" fill="#FFFFFF" stroke="#DCCDEB"/>
+  </g>
+  <rect x="920" y="320" width="290" height="6" rx="3" fill="#764BA2"/>
+  <text x="938" y="356" class="st" font-size="19" font-weight="700" fill="#31333F">Amazon Bedrock Agent</text>
+  <g class="st" font-size="14" fill="#555867">
+    <text x="938" y="382">Agent ID + Agent Alias ID</text>
+    <text x="938" y="404">(alias defaults to TSTALIASID)</text>
+    <text x="938" y="436">You build and configure the agent;</text>
+    <text x="938" y="456">rates and tracking logic live there</text>
+  </g>
+
+  <!-- ===== Arrows ===== -->
+  <!-- Browser <-> app.py -->
+  <path d="M272 240H376" fill="none" stroke="#4B55C8" stroke-width="2" marker-start="url(#ar-head)" marker-end="url(#ar-head)"/>
+  <rect x="291.5" y="206.5" width="66" height="20" rx="10" fill="#FFFFFF" stroke="#D4D8F0"/>
+  <text x="324.5" y="221" class="st" font-size="12" fill="#31333F" text-anchor="middle">HTTP</text>
+  <rect x="283.5" y="253.5" width="82" height="20" rx="10" fill="#FFFFFF" stroke="#D4D8F0"/>
+  <text x="324.5" y="268" class="st" font-size="12" fill="#31333F" text-anchor="middle">WebSocket</text>
+
+  <!-- app.py -> connector -->
+  <path d="M550 292V336" fill="none" stroke="#4B55C8" stroke-width="2" marker-end="url(#ar-head)"/>
+  <text x="560" y="319" class="mono" font-size="12.5" fill="#31333F">send_message()</text>
+
+  <!-- config -> connector -->
+  <path d="M550 498V454" fill="none" stroke="#4B55C8" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar-head)"/>
+  <text x="560" y="480" class="st" font-size="13" fill="#31333F">keys (optional), region, agent IDs</text>
+
+  <!-- connector -> Bedrock -->
+  <path d="M722 378H916" fill="none" stroke="#4B55C8" stroke-width="2" marker-end="url(#ar-head)"/>
+  <text x="820" y="366" class="mono" font-size="13" font-weight="700" fill="#31333F" text-anchor="middle">InvokeAgent</text>
+  <text x="820" y="396" class="st" font-size="12.5" fill="#555867" text-anchor="middle">HTTPS · SigV4</text>
+
+  <!-- Bedrock -> connector -->
+  <path d="M918 428H724" fill="none" stroke="#764BA2" stroke-width="2" marker-end="url(#ar-head2)"/>
+  <text x="820" y="448" class="st" font-size="12.5" fill="#31333F" text-anchor="middle">completion event</text>
+  <text x="820" y="464" class="st" font-size="12.5" fill="#31333F" text-anchor="middle">stream (chunks)</text>
+
+  <!-- Footnote -->
+  <path d="M40 630.5H1240" stroke="#D4D8F0"/>
+  <text x="40" y="660" class="st" font-size="14" fill="#555867">Connect to Agent sends one test message and reads its stream before the app reports Connected. Each reply is collected in full, then shown in the chat.</text>
+  <text x="40" y="684" class="st" font-size="14" fill="#555867">Keys typed in the sidebar take priority; when both key fields are blank, boto3 uses AWS_* variables, your AWS profile or an IAM role.</text>
+</svg>
