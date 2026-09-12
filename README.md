@@ -119,7 +119,7 @@ All optional. Create `.env` from `.env.example`; anything left blank can be type
 | `AWS_ACCESS_KEY_ID` | No | Access key for boto3's default credential chain, used when the sidebar key fields are blank. Skip it if you use an AWS profile, SSO or an IAM role. |
 | `AWS_SECRET_ACCESS_KEY` | No | Secret key that goes with `AWS_ACCESS_KEY_ID`. |
 | `AWS_SESSION_TOKEN` | No | Session token, only for temporary (STS) credentials. |
-| `AWS_REGION` | No | Pre-selects the region in the sidebar and is added to the picker if it isn't one of the built-in options (`us-east-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`). |
+| `AWS_REGION` | No | Pre-selects the region in the sidebar and is added to the picker if it isn't one of the built-in options (`us-east-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`). Falls back to `AWS_DEFAULT_REGION` when unset. |
 | `BEDROCK_AGENT_ID` | No | Pre-fills the Bedrock Agent ID field. |
 | `BEDROCK_AGENT_ALIAS_ID` | No | Pre-fills the Agent Alias ID field (default `TSTALIASID`). |
 

@@ -27,7 +27,7 @@ def create_env_file():
                 content = template.read()
             with open('.env', 'w') as env_file:
                 env_file.write(content)
-            print("✅ .env file created! Please edit it with your AWS credentials.")
+            print("✅ .env file created! Every value in it is optional (see README.md).")
         else:
             print("⚠️  .env.example not found. Please create .env manually.")
     else:
