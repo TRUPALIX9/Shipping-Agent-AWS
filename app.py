@@ -21,7 +21,7 @@ st.set_page_config(
     page_title="Shipping Agent Assistant",
     page_icon="📦",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # Custom CSS for minimalistic design
@@ -322,6 +322,8 @@ with col1:
                     "timestamp": datetime.now().strftime("%H:%M:%S")
                 })
             st.rerun()
+        else:
+            st.warning("Connect to your agent in the sidebar first.")
 
 with col2:
     if st.button("📦 Track Package", use_container_width=True):
@@ -345,6 +347,8 @@ with col2:
                     "timestamp": datetime.now().strftime("%H:%M:%S")
                 })
             st.rerun()
+        else:
+            st.warning("Connect to your agent in the sidebar first.")
 
 with col3:
     if st.button("🔄 Clear Chat", use_container_width=True):
