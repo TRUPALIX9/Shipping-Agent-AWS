@@ -1,8 +1,19 @@
+import os
 import streamlit as st
 import boto3
 import json
 from datetime import datetime
 import time
+from dotenv import load_dotenv
+
+# Load optional settings from a local .env file (see .env.example).
+# Values already set in the environment win over the file.
+load_dotenv()
+
+AWS_REGIONS = ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"]
+ENV_REGION = os.getenv("AWS_REGION") or os.getenv("AWS_DEFAULT_REGION") or ""
+if ENV_REGION and ENV_REGION not in AWS_REGIONS:
+    AWS_REGIONS.insert(0, ENV_REGION)
 
 # Configure page
 st.set_page_config(
@@ -77,11 +88,16 @@ class AWSAgentConnector:
     def initialize_connection(self, aws_access_key, aws_secret_key, region, agent_id, agent_alias_id):
         """Initialize connection to AWS Bedrock Agent"""
         try:
-            self.session = boto3.Session(
-                aws_access_key_id=aws_access_key,
-                aws_secret_access_key=aws_secret_key,
-                region_name=region
-            )
+            if aws_access_key and aws_secret_key:
+                self.session = boto3.Session(
+                    aws_access_key_id=aws_access_key,
+                    aws_secret_access_key=aws_secret_key,
+                    region_name=region
+                )
+            else:
+                # No keys typed in: use boto3's default credential chain
+                # (AWS_* env vars / .env, AWS profile, SSO, or an IAM role).
+                self.session = boto3.Session(region_name=region)
             
             self.bedrock_agent = self.session.client('bedrock-agent-runtime')
             self.agent_id = agent_id
@@ -150,18 +166,32 @@ with st.sidebar:
     st.header("🔧 AWS Agent Configuration")
     
     with st.form("aws_config"):
-        aws_access_key = st.text_input("AWS Access Key ID", type="password")
-        aws_secret_key = st.text_input("AWS Secret Access Key", type="password")
-        region = st.selectbox("AWS Region", [
-            "us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"
-        ])
-        agent_id = st.text_input("Bedrock Agent ID")
-        agent_alias_id = st.text_input("Agent Alias ID", value="TSTALIASID")
-        
+        # Key fields are never pre-filled, so secrets from the environment
+        # are not sent to the browser. Leave both blank to use the
+        # environment / AWS profile instead.
+        aws_access_key = st.text_input(
+            "AWS Access Key ID", type="password",
+            placeholder="Blank = use env / AWS profile"
+        )
+        aws_secret_key = st.text_input(
+            "AWS Secret Access Key", type="password",
+            placeholder="Blank = use env / AWS profile"
+        )
+        region = st.selectbox(
+            "AWS Region", AWS_REGIONS,
+            index=AWS_REGIONS.index(ENV_REGION) if ENV_REGION else 0
+        )
+        agent_id = st.text_input("Bedrock Agent ID", value=os.getenv("BEDROCK_AGENT_ID", ""))
+        agent_alias_id = st.text_input(
+            "Agent Alias ID", value=os.getenv("BEDROCK_AGENT_ALIAS_ID") or "TSTALIASID"
+        )
+
         submit_config = st.form_submit_button("Connect to Agent")
-        
+
         if submit_config:
-            if all([aws_access_key, aws_secret_key, region, agent_id]):
+            if bool(aws_access_key) != bool(aws_secret_key):
+                st.error("Enter both the Access Key ID and the Secret Access Key, or leave both blank")
+            elif all([region, agent_id, agent_alias_id]):
                 with st.spinner("Connecting to AWS Bedrock Agent..."):
                     success, message = st.session_state.agent_connector.initialize_connection(
                         aws_access_key, aws_secret_key, region, agent_id, agent_alias_id
