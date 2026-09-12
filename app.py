@@ -110,18 +110,32 @@ class AWSAgentConnector:
             self.agent_id = agent_id
             self.agent_alias_id = agent_alias_id
             
-            # Test connection
-            response = self.bedrock_agent.invoke_agent(
-                agentId=self.agent_id,
-                agentAliasId=self.agent_alias_id,
-                sessionId=f"test-session-{int(time.time())}",
-                inputText="Hello, are you working?"
-            )
-            
+            # Test connection. Read the whole stream: many failures (model
+            # access denied, throttling, agent errors) only raise while the
+            # completion stream is read, not when invoke_agent returns.
+            self._invoke("Hello, are you working?", f"test-session-{int(time.time())}")
+
             return True, "Successfully connected to AWS Bedrock Agent!"
-            
+
         except Exception as e:
+            self.bedrock_agent = None
             return False, f"Connection failed: {str(e)}"
+
+    def _invoke(self, message, session_id):
+        """Call invoke_agent and join the text chunks of the event stream"""
+        response = self.bedrock_agent.invoke_agent(
+            agentId=self.agent_id,
+            agentAliasId=self.agent_alias_id,
+            sessionId=session_id,
+            inputText=message
+        )
+
+        response_text = ""
+        for event in response.get('completion', []):
+            chunk = event.get('chunk', {})
+            if 'bytes' in chunk:
+                response_text += chunk['bytes'].decode('utf-8')
+        return response_text
     
     def send_message(self, message, session_id):
         """Send message to AWS Bedrock Agent"""
@@ -129,24 +143,10 @@ class AWSAgentConnector:
             return "Error: Agent not connected. Please configure connection first."
         
         try:
-            response = self.bedrock_agent.invoke_agent(
-                agentId=self.agent_id,
-                agentAliasId=self.agent_alias_id,
-                sessionId=session_id,
-                inputText=message
-            )
-            
-            # Extract response from the event stream
-            response_text = ""
-            if 'completion' in response:
-                for event in response['completion']:
-                    if 'chunk' in event:
-                        chunk = event['chunk']
-                        if 'bytes' in chunk:
-                            response_text += chunk['bytes'].decode('utf-8')
-            
-            return response_text if response_text else "Agent processed your request successfully."
-            
+            response_text = self._invoke(message, session_id)
+
+            return response_text if response_text else "The agent returned no text response."
+
         except Exception as e:
             return f"Error communicating with agent: {str(e)}"
 
