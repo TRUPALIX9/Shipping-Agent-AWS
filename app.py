@@ -1,3 +1,4 @@
+import html
 import os
 import streamlit as st
 import boto3
@@ -34,7 +35,11 @@ st.markdown("""
         border-radius: 10px;
         margin-bottom: 2rem;
     }
-    
+
+    .main-header h1 {
+        color: white;
+    }
+
     .chat-container {
         background: #f8f9fa;
         border-radius: 10px;
@@ -44,6 +49,7 @@ st.markdown("""
     
     .user-message {
         background: #e3f2fd;
+        color: #31333f;
         padding: 1rem;
         border-radius: 10px;
         margin: 0.5rem 0;
@@ -52,6 +58,7 @@ st.markdown("""
     
     .agent-message {
         background: #f3e5f5;
+        color: #31333f;
         padding: 1rem;
         border-radius: 10px;
         margin: 0.5rem 0;
@@ -227,17 +234,21 @@ st.header("💬 Chat with Your Agent")
 chat_container = st.container()
 with chat_container:
     for message in st.session_state.messages:
+        # Escape user/agent text so it shows as text instead of being
+        # injected as HTML, and keep line breaks without blank lines that
+        # would end the HTML block.
+        content = html.escape(message["content"]).replace("\n", "<br>")
         if message["role"] == "user":
             st.markdown(f"""
             <div class="user-message">
-                <strong>You:</strong> {message["content"]}
+                <strong>You:</strong> {content}
                 <small style="float: right; color: #666;">{message["timestamp"]}</small>
             </div>
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
             <div class="agent-message">
-                <strong>Agent:</strong> {message["content"]}
+                <strong>Agent:</strong> {content}
                 <small style="float: right; color: #666;">{message["timestamp"]}</small>
             </div>
             """, unsafe_allow_html=True)
